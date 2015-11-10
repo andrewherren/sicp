@@ -100,8 +100,57 @@
   (sqrt-iter 1.0))
 
 
+; Exercise 1.10
+; The following procedure computes a mathematical
+;       function called Ackermann's function
+(define (A x y)
+  (cond ((= y 0) 0)
+        ((= x 0) (* 2 y))
+        ((= y 1) 2)
+        (else (A (- x 1)
+                 (A x (- y 1))))))
 
+; What are the values of the following expressions
+; (A 1 10)
+; 2^10 because the final argument, (A x (- y 1))
+;       will evaluate 9 times before y = 1 and the
+;       function stops at 2
+; (A 2 4)
+; 
+; (A 3 3)
 
+; Tree recursion
+; Counting change program
+(define (count-change amount)
+  (cc amount 5))
+(define (cc amount kinds-of-coins)
+  (cond ((= amount 0) 1)
+        ((or (< amount 0) (= kinds-of-coins 0)) 0)
+        (else (+ (cc amount
+                     (- kinds-of-coins 1))
+                 (cc (- amount
+                        (first-denomination kinds-of-coins))
+                     kinds-of-coins)))))
+(define (first-denomination kinds-of-coins)
+  (cond ((= kinds-of-coins 1) 1)
+        ((= kinds-of-coins 2) 5)
+        ((= kinds-of-coins 3) 10)
+        ((= kinds-of-coins 4) 25)
+        ((= kinds-of-coins 5) 50)))
 
+(count-change 100)
+
+; Exercise 1.11
+; A function f is defined by the rule that 
+;       f(n) = n if n<3 and 
+;       f(n) = f(n - 1) + 2f(n - 2) + 3f(n - 3) if n> 3.
+;       Write a procedure that computes f by means of a 
+;       recursive process. Write a procedure that computes 
+;       f by means of an iterative process.
+; Recursive solution
+(define (f n)
+  (cond ((< n 3) n)
+	(else (+ (+ (f (n-1)) (* 2 (f (n-2))))))
+		 (* 3 (f (n-3))))))))
 
 

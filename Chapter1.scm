@@ -4,7 +4,7 @@
 (/ (+ (+ 5 4)
       (- 2 (- 3 (+ 6 (/ 4 5)))))
       (* 3 (* (- 6 2) (- 2 7))))
-; Value: -37/150
+;Value: -37/150
 
 ; Exercise 1.3
 ; First define square
@@ -14,19 +14,19 @@
   (+ (square a)
      (square b)))
 ; Then add all up into procedure
-(define (f a b c)
+(define (best-sum-of-squares a b c)
   (cond ((and (< a b)
-	      (< a c))
-	 (sum-of-squares b c)
-	 ((and (< b a)
-	       (< b c))
-	  (sum-of-squares a c))
-	 ((and (< c b)
-	       (< c a))
-	  (sum-of-squares a b)))))
+	          (< a c))
+	     (sum-of-squares b c))
+	    ((and (< b a)
+	          (< b c))
+	     (sum-of-squares a c))
+	    ((and (< c b)
+	          (< c a))
+	     (sum-of-squares a b))))
 
-(f 1 2 3)
-; Value: 13
+(best-sum-of-squares 1 2 3)
+;Value: 13
 
 ; Exercise 1.4
 ; a-plus-abs-b returns a + |b|
@@ -61,32 +61,34 @@
   (sqrt-iter 1.0 x))
 
 (sqrt 9)
+;Value: 3.00009155413138
 (sqrt (+ 100 37))
+;Value: 11.704699917758145
 (sqrt (+ (sqrt 2) (sqrt 3)))
+;Value: 1.7739279023207892
 (square (sqrt 1000))
+;Value: 1000.000369924366
 
 (define (new-if predicate then-clause else-clause)
   (cond (predicate then-clause)
-	(else else-clause)))
+	    (else else-clause)))
 (new-if (= 2 3) 0 5)
+;Value: 5
 (new-if (= 1 1) 0 5)
+;Value: 0
 
 ; rewrite sqrt-iter with new-if
 (define (sqrt-iter guess x)
   (new-if (good-enough? guess x)
-	  guess
-	  (sqrt-iter (improve guess x)
-		     x)))
+	      guess
+	      (sqrt-iter (improve guess x)
+		             x)))
 ; Running (sqrt #) will trigger a maximum
 ;    recursion limit. The procedure new-if
 ;    is not special form, so it calls the
 ;    procedure as many times as necessary
 
 ; Exercise 1.7
-; (sqrt 0.0001) returns 0.032, not 0.01
-; (sqrt 500) returns 22.360679 properly
-;    the procedure is better for large numbers
-
 ; sqrt implemented in block structure
 (define (sqrt x)
   (define (good-enough? guess)
@@ -98,7 +100,9 @@
 	guess
 	(sqrt-iter (improve guess))))
   (sqrt-iter 1.0))
-
+; (sqrt 0.0001) returns 0.032, not 0.01
+; (sqrt 500) returns 22.360679 properly
+;    the procedure is better for large numbers
 
 ; Exercise 1.10
 ; The following procedure computes a mathematical
@@ -116,8 +120,48 @@
 ;       will evaluate 9 times before y = 1 and the
 ;       function stops at 2
 ; (A 2 4)
-; 
+; 2^16 because the function first evaluates to (A 1 (A 2 3))
+;       = (A 1 (A 1 (A 2 2)))
+;       = (A 1 (A 1 (A 1 (A 2 1))))
+;       = (A 1 (A 1 (A 1 2)))
+;       = (A 1 (A 1 (A 0 (A 1 1))))
+;       = (A 1 (A 1 (A 0 2)))
+;       = (A 1 (A 1 (2 * 2)))
+;       = (A 1 (A 1 4))
+;       = (A 1 (A 0 (A 1 3)))
+;       = (A 1 (A 0 (A 0 (A 1 2))))
+;       = (A 1 (A 0 (A 0 (A 1 2))))
+;       = (A 1 (A 0 (A 0 (A 0 (A 1 1)))))
+;       = (A 1 (A 0 (A 0 (A 0 2))))
+;       = (A 1 (A 0 (A 0 (2 * 2))))
+;       = (A 1 (A 0 (A 0 4)))
+;       = (A 1 (A 0 (2 * 4)))
+;       = (A 1 (A 0 8))
+;       = (A 1 (2 * 8))
+;       = (A 1 16)
+;       which as we saw above will evaluate to 2^16
 ; (A 3 3)
+; 2^16 because the function first evaluates to (A 2 (A 3 2))
+;       = (A 2 (A 2 (A 3 1)))
+;       = (A 2 (A 2 2))
+;       = (A 2 (A 1 (A 2 1)))
+;       = (A 2 (A 1 2))
+;       = (A 2 (A 0 (A 1 1)))
+;       = (A 2 (A 0 2))
+;       = (A 2 (2 * 2))
+;       = (A 2 4)
+;       which as we saw above will evaluate to 2^16
+; Consider the following procedures, where A is the procedure defined above:
+(define (f n) (A 0 n))
+(define (g n) (A 1 n))
+(define (h n) (A 2 n))
+(define (k n) (* 5 n n))
+; Give concise mathematical definitions for the functions computed by the
+; procedures f, g, and h for positive integer values of n. For example,
+; (k n) computes 5n2.
+; f(n) = 2*n
+; g(n) = 2^n
+; h(n) = 2^(n^2)
 
 ; Tree recursion
 ; Counting change program
@@ -141,17 +185,26 @@
 (count-change 100)
 
 ; Exercise 1.11
-; A function f is defined by the rule that 
-;       f(n) = n if n<3 and 
+; A function f is defined by the rule that
+;       f(n) = n if n<3 and
 ;       f(n) = f(n - 1) + 2f(n - 2) + 3f(n - 3) if n> 3.
-;       Write a procedure that computes f by means of a 
-;       recursive process. Write a procedure that computes 
+;       Write a procedure that computes f by means of a
+;       recursive process. Write a procedure that computes
 ;       f by means of an iterative process.
 ; Recursive solution
 (define (f n)
   (cond ((< n 3) n)
-	(else (+ (+ (f (n-1)) (* 2 (f (n-2))))))
-		 (* 3 (f (n-3))))))))
+	     (else (+ (+ (f (- n 1)) (* 2 (f (- n 2)))) (* 3 (f (- n 3)))))))
+; Iterative solution
+; a <- a + 2*b + 3*c
+; b <- a
+; c <- b
+(define (f n)
+  (f-iter 2 1 0 n))
+(define (f-iter a b c count)
+  (if (= count 0)
+      c
+      (f-iter (+ (+ a (* b 2)) (* c 3)) a b (- count 1))))
 
 ; Exercise 1.12
 ; The following pattern of numbers is called Pascal's triangle.
@@ -166,31 +219,31 @@
 	((= col 1) 1)
 	(else (+ (pascal (- row 1) (- col 1))
 		 (pascal (- row 1) col)))))
-;(pascal 1 1)
+(pascal 1 1)
 ;Value: 1
-;(pascal 2 1)
+(pascal 2 1)
 ;Value: 1
-;(pascal 2 2)
+(pascal 2 2)
 ;Value: 1
-;(pascal 3 1)
+(pascal 3 1)
 ;Value: 1
-;(pascal 3 2)
+(pascal 3 2)
 ;Value: 2
-;(pascal 3 3)
+(pascal 3 3)
 ;Value: 1
-;(pascal 4 2)
+(pascal 4 2)
 ;Value: 3
-;(pascal 4 3)
+(pascal 4 3)
 ;Value: 3
-;(pascal 5 3)
+(pascal 5 3)
+;Value: 6
 
 ; Exercise 1.13
-; Prove that Fib(n) is the closest integer to (phi^n)/sqrt(5), 
-;      where phi = (1 + sqrt(5))/2. Hint: Let rho = (1 - sqrt(5))/2. 
-; Use induction and the definition of the Fibonacci 
-;  numbers (see section 1.2.2) 
+; Prove that Fib(n) is the closest integer to (phi^n)/sqrt(5),
+;      where phi = (1 + sqrt(5))/2. Hint: Let rho = (1 - sqrt(5))/2.
+; Use induction and the definition of the Fibonacci
+;  numbers (see section 1.2.2)
 ;  to prove that Fib(n) = (phi^n - rho^n)/sqrt(5)
-; 
 ; SOLUTION
 ; Base case: show for n = 0 and n = 1
 ;   n = 0 :==>
@@ -203,13 +256,13 @@
 ;           1 = ((2*(sqrt(5)))/2) / sqrt(5)
 ;           1 = (sqrt(5)) / sqrt(5)
 ;           1 = 1
-; Induction case: 
+; Induction case:
 ;   take k >= 1 as given and assume relation is true for all n >= 0
 ;      Fib(k + 1) = Fib(k) + Fib(k - 1)
 ;      by induction hypothesis
-;      Fib(k + 1) = ((phi^(k) - rho^(k))/sqrt(5)) + 
+;      Fib(k + 1) = ((phi^(k) - rho^(k))/sqrt(5)) +
 ;                   ((phi^(k - 1) - rho^(k - 1))/sqrt(5))
-;                 = ((phi)^(k) + (phi)^(k - 1))/sqrt(5) - 
+;                 = ((phi)^(k) + (phi)^(k - 1))/sqrt(5) -
 ;                   ((rho)^(k) + (rho)^(k - 1))/sqrt(5)
 ;                 = (((phi)^(k - 1)(phi + 1)) - ((rho)^(k - 1)(rho + 1)))/sqrt(5)
 ;      since phi^2 = phi + 1 and rho^2 = rho + 1
@@ -217,22 +270,21 @@
 ;                 = ((phi)^(k + 1) - (rho)^(k + 1))/sqrt(5)
 
 ; Exercise 1.14
-; Draw the tree illustrating the process generated by the count-change 
-; procedure of section 1.2.2 in making change for 11 cents. 
-; What are the orders of growth of the space and number of steps used 
+; Draw the tree illustrating the process generated by the count-change
+; procedure of section 1.2.2 in making change for 11 cents.
+; What are the orders of growth of the space and number of steps used
 ; by this process as the amount to be changed increases?
-
-
+; Orders of growth: O(n^2)
 
 ; Exercise 1.15
-; The sine of an angle (specified in radians) can be computed by making 
-;           use of the approximation sin x x if x is sufficiently small, 
+; The sine of an angle (specified in radians) can be computed by making
+;           use of the approximation sin x = x if x is sufficiently small,
 ;           and the trigonometric identity
 ;
 ;      sin(r) = 3sin(r/3) - 4sin^3(r/3)
 ;
-; to reduce the size of the argument of sin. (For purposes of this 
-;           exercise an angle is considered ``sufficiently small'' if 
+; to reduce the size of the argument of sin. (For purposes of this
+;           exercise an angle is considered "sufficiently small" if
 ;           its magnitude is not greater than 0.1 radians.) These
 ;           ideas are incorporated in the following procedures:
 (define (cube x) (* x x x))
@@ -240,11 +292,43 @@
 (define (sine angle)
    (if (not (> (abs angle) 0.1))
        angle
-       (p (sine (/ angle 3.0))))) 
-; (a) How many times is the procedure p applied when (sine 12.15) is 
+       (p (sine (/ angle 3.0)))))
+; (a) How many times is the procedure p applied when (sine 12.15) is
 ;          evaluated?
-; (b) What is the order of growth in space and number of steps (as a 
-;          function of a) used by the process generated by the sine 
+; 5 times
+; (b) What is the order of growth in space and number of steps (as a
+;          function of a) used by the process generated by the sine
 ;          procedure when (sine a) is evaluated?
+; It grows 
+
+; Exercise 1.16.  Design a procedure that evolves an iterative exponentiation
+;          process that uses successive squaring and uses a logarithmic number
+;          of steps, as does fast-expt. (Hint: Using the observation that
+;          (bn/2)2 = (b2)n/2, keep, along with the exponent n and the base b,
+;          an additional state variable a, and define the state transformation
+;          in such a way that the product a bn is unchanged from state to state.
+;          At the beginning of the process a is taken to be 1, and the answer
+;          is given by the value of a at the end of the process. In general,
+;          the technique of defining an invariant quantity that remains
+;          unchanged from state to state is a powerful way to think about
+;          the design of iterative algorithms.)
 
 
+
+; Exercise 1.17.  The exponentiation algorithms in this section are based on
+;          performing exponentiation by means of repeated multiplication. In a
+;          similar way, one can perform integer multiplication by means of
+;          repeated addition. The following multiplication procedure (in
+;          which it is assumed that our language can only add, not multiply)
+;          is analogous to the expt procedure:
+
+(define (* a b)
+  (if (= b 0)
+      0
+      (+ a (* a (- b 1)))))
+
+;          This algorithm takes a number of steps that is linear in b. Now
+;          suppose we include, together with addition, operations double,
+;          which doubles an integer, and halve, which divides an (even)
+;          integer by 2. Using these, design a multiplication procedure
+;          analogous to fast-expt that uses a logarithmic number of steps.

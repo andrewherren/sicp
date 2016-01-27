@@ -204,7 +204,7 @@
 (define (f-iter a b c count)
   (if (= count 0)
       c
-      (f-iter (+ (+ a (* b 2)) (* c 3)) a b (- count 1))))
+      (f-iter (+ a (* b 2) (* c 3)) a b (- count 1))))
 
 ; Exercise 1.12
 ; The following pattern of numbers is called Pascal's triangle.
@@ -215,10 +215,10 @@
 ;     1 4 6 4 1
 (define (pascal row col)
   (cond ((= row 1) 1)
-	((= row col) 1)
-	((= col 1) 1)
-	(else (+ (pascal (- row 1) (- col 1))
-		 (pascal (- row 1) col)))))
+	    ((= row col) 1)
+	    ((= col 1) 1)
+        (else (+ (pascal (- row 1) (- col 1))
+		         (pascal (- row 1) col)))))
 (pascal 1 1)
 ;Value: 1
 (pascal 2 1)
@@ -353,5 +353,12 @@
 ;          logarithmic number of steps.
 (define (fast-mult a b)
   (fast-mult-iter 1 a b))
-(define (fast-mult-iter a x y)
-  ())
+(define (fast-mult-iter answer a b)
+  (cond ((= b 0) answer)
+        ((even? b) (fast-mult-iter ; todo: figure out the first parameter in this iteration ;
+             a (/ b 2)))
+        (else (fast-mult-iter (+ answer a) a (- b 1)))))
+(define (even? n)
+  (= (remainder n 2) 0))
+(define (double a)
+  (* 2 a))

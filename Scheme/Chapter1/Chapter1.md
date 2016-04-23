@@ -15,4 +15,5 @@ Chapter 1 introduces programming procedures and how they can be used to build ab
 	     (sum-of-squares a b))))
 
 (best-sum-of-squares 1 2 3)
+;Value: 13
 ```

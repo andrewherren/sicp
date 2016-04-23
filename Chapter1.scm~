@@ -435,4 +435,3 @@
 ;          actually performed. How many remainder operations are actually
 ;          performed in the normal-order evaluation of (gcd 206 40)? In
 ;          the applicative-order evaluation?
-

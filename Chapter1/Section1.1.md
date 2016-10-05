@@ -78,9 +78,9 @@
 (define (a-plus-abs-b a b)
   ((if (> b 0) + -) a b))
 ```
-a-plus-abs-b returns a + |b| by   evaluating:  
-    a + b if b > 0, and  
-    a - b if b < 0  
+>a-plus-abs-b returns a + |b| by evaluating:  
+&nbsp;&nbsp;&nbsp;&nbsp;a + b if b > 0, and  
+&nbsp;&nbsp;&nbsp;&nbsp;a - b if b < 0  
 
 **Exercise 1.5** Ben Bitdiddle has invented a test to determine whether the interpreter he is faced with is using applicative-order evaluation or normal-order evaluation. He defines the following two procedures:
 ```scheme
@@ -97,7 +97,7 @@ Then he evaluates the expression
 ```
 What behavior will Ben observe with an interpreter that uses applicative-order evaluation? What behavior will he observe with an interpreter that uses normal-order evaluation? Explain your answer.
 
-Normal-order evaluation will expand the expression first, avoding evaluation of (p) and applicative-order evaluation will first evaluate 0 and (p) entering the endless loop before terminating when x is found to be 0
+>Normal-order evaluation will expand the expression first, avoding evaluation of (p) and applicative-order evaluation will first evaluate 0 and (p) entering the endless loop before terminating when x is found to be 0
 
 **Exercise 1.6** Alyssa P. Hacker doesn't see why if needs to be provided as a special form. "Why can't I just define it as an ordinary procedure in terms of cond?" she asks. Alyssa's friend Eva Lu Ator claims this can indeed be done, and she defines a new version of if:
 ```scheme
@@ -122,7 +122,7 @@ Delighted, Alyssa uses new-if to rewrite the square-root program:
 ```
 What happens when Alyssa attempts to use this to compute square roots? Explain.
 
-Running (sqrt #) will trigger a maximum recursion limit. The procedure new-if is not special form, so it calls the procedure as many times as necessary
+>Running (sqrt #) will trigger a maximum recursion limit. The procedure new-if is not special form, so it calls the procedure as many times as necessary
 
 **Exercise 1.7** The good-enough? test used in computing square roots will not be very effective for finding the square roots of very small numbers. Also, in real computers, arithmetic operations are almost always performed with limited precision. This makes our test inadequate for very large numbers. Explain these statements, with examples showing how the test fails for small and large numbers. An alternative strategy for implementing good-enough? is to watch how guess changes from one iteration to the next and to stop when the change is a very small fraction of the guess. Design a square-root procedure that uses this kind of end test. Does this work better for small and large numbers?
 
@@ -143,7 +143,7 @@ Running (sqrt #) will trigger a maximum recursion limit. The procedure new-if is
 (sqrt 500)
 ; Value: 22.360679
 ```
-The procedure is better for large numbers
+>The procedure is better for large numbers
 
 **Exercise 1.8** Newton's method for cube roots is based on the fact that if y is an approximation to the cube root of x, then a better approximation is given by the value  
 ((r/(y^2)) + 2y) / 3  

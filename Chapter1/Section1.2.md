@@ -106,6 +106,14 @@ Write a procedure that computes f by means of a recursive process. Write a proce
 ```
 
 **Exercise 1.12** The following pattern of numbers is called Pascal's triangle.  
+```Tex
+         1
+        1 1
+       1 2 1
+      1 3 3 1
+     1 4 6 4 1
+```
+
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;1  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;2&nbsp;1  

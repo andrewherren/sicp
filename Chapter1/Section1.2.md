@@ -113,12 +113,6 @@ Write a procedure that computes f by means of a recursive process. Write a proce
       1 3 3 1
      1 4 6 4 1
 ```
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;1  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;2&nbsp;1  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;3&nbsp;3&nbsp;1  
-&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;4&nbsp;6&nbsp;4&nbsp;1  
 The numbers at the edge of the triangle are all 1, and each number inside the triangle is the sum of the two numbers above it.35 Write a procedure that computes elements of Pascal's triangle by means of a recursive process.
 ```scheme
 (define (pascal row col)
@@ -148,6 +142,28 @@ The numbers at the edge of the triangle are all 1, and each number inside the tr
 ```
 
 **Exercise 1.13** Prove that Fib(n) is the closest integer to (phi^n)/5, where phi = (1 + sqrt(5))/2. Hint: Let psi = (1 - sqrt(5))/2. Use induction and the definition of the Fibonacci numbers (see section 1.2.2) to prove that Fib(n) = (n - n)/5.
+
+```Text
+Base case: show for n = 0 and n = 1
+
+n=0: Fib(0) = (phi^0 - rho^0)/sqrt(5)
+          0 = (0 - 0)/sqrt(5)
+          0 = 0
+n=1: Fib(1) = (phi^1 - rho^1)/sqrt(5)
+          1 = ((1 + sqrt(5))/2 - (1 - sqrt(5))/2)/sqrt(5)
+          1 = ((2*(sqrt(5)))/2) / sqrt(5)
+          1 = (sqrt(5)) / sqrt(5)
+          1 = 1
+
+Induction case: take k >= 1 as given and assume relation is true for all n >= 0
+
+ Fib(k + 1) = Fib(k) + Fib(k - 1) |
+ Fib(k + 1) = ((phi^(k) - rho^(k))/sqrt(5)) + ((phi^(k - 1) - rho^(k - 1))/sqrt(5)) ;; by induction hypothesis
+ Fib(k + 1) = ((phi)^(k) + (phi)^(k - 1))/sqrt(5) - ((rho)^(k) + (rho)^(k - 1))/sqrt(5) |
+ Fib(k + 1) = (((phi)^(k - 1)(phi + 1)) - ((rho)^(k - 1)(rho + 1)))/sqrt(5) ;; since phi^2 = phi + 1 and rho^2 = rho + 1
+ Fib(k + 1) = (((phi)^(k - 1)(phi^2)) - ((rho)^(k - 1)(rho^2)))/sqrt(5)
+ Fib(k + 1) = ((phi)^(k + 1) - (rho)^(k + 1))/sqrt(5)
+```
 
 | Base case: | show for n = 0 and n = 1 |
 | ------------- |:-------------|

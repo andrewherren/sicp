@@ -184,12 +184,14 @@ b. What is the order of growth in space and number of steps (as a function of a)
 
 **Exercise 1.16** Design a procedure that evolves an iterative exponentiation process that uses successive squaring and uses a logarithmic number of steps, as does fast-expt. (Hint: Using the observation that (b^(n/2))^2 = (b^2)^(n/2), keep, along with the exponent n and the base b, an additional state variable a, and define the state transformation in such a way that the product a bn is unchanged from state to state. At the beginning of the process a is taken to be 1, and the answer is given by the value of a at the end of the process. In general, the technique of defining an invariant quantity that remains unchanged from state to state is a powerful way to think about the design of iterative algorithms.)  
 ```scheme
-; First set the iterative process
+; define the iterative algorithm
 (define (rapid-expt-iter b n product)
     (cond ((= n 0) product)
+          ; use successive squaring for even powers greater than 2
           ((and (even? n) (> n 2)) (rapid-expt-iter b (/ n 2) (* product (* b b))))
+          ; else use simple iteration
           (else (rapid-expt-iter b (- n 1) (* product b)))))
-; Call iterative algorithm in a shorter-form function which initializes a to be 1
+; call iterative algorithm in a shorter-form function which initializes a to be 1
 (define (rapid-expt b n)
     (rapid-expt-iter b n 1))
 ; Test some outputs

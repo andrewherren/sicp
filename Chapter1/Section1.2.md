@@ -157,10 +157,14 @@ n=1: Fib(1) = (phi^1 - rho^1)/sqrt(5)
 
 Induction case: take k >= 1 as given and assume relation is true for all n >= 0
 
- Fib(k + 1) = Fib(k) + Fib(k - 1) |
- Fib(k + 1) = ((phi^(k) - rho^(k))/sqrt(5)) + ((phi^(k - 1) - rho^(k - 1))/sqrt(5)) ;; by induction hypothesis
- Fib(k + 1) = ((phi)^(k) + (phi)^(k - 1))/sqrt(5) - ((rho)^(k) + (rho)^(k - 1))/sqrt(5) |
- Fib(k + 1) = (((phi)^(k - 1)(phi + 1)) - ((rho)^(k - 1)(rho + 1)))/sqrt(5) ;; since phi^2 = phi + 1 and rho^2 = rho + 1
+ Fib(k + 1) = Fib(k) + Fib(k - 1)
+
+By the induction hypothesis, we have that
+ Fib(k + 1) = ((phi^(k) - rho^(k))/sqrt(5)) + ((phi^(k - 1) - rho^(k - 1))/sqrt(5))
+ Fib(k + 1) = ((phi)^(k) + (phi)^(k - 1))/sqrt(5) - ((rho)^(k) + (rho)^(k - 1))/sqrt(5)
+
+Since phi^2 = phi + 1 and rho^2 = rho + 1, we observe that
+ Fib(k + 1) = (((phi)^(k - 1)(phi + 1)) - ((rho)^(k - 1)(rho + 1)))/sqrt(5)
  Fib(k + 1) = (((phi)^(k - 1)(phi^2)) - ((rho)^(k - 1)(rho^2)))/sqrt(5)
  Fib(k + 1) = ((phi)^(k + 1) - (rho)^(k + 1))/sqrt(5)
 ```

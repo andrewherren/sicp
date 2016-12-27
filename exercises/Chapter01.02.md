@@ -1,6 +1,14 @@
 ## [Section 1.2 - Procedures and the Processes They Generate](https://mitpress.mit.edu/sicp/full-text/book/book-Z-H-11.html#%_sec_1.2)
 
 ## Exercises
+```scheme
+;; ======================================================
+;; Load definitions and functions from earlier chapters
+;; ======================================================
+(load "c01s01.scm")
+;; ======================================================
+```
+
 **Exercise 1.9** Each of the following two procedures defines a method for adding two positive integers in terms of the procedures inc, which increments its argument by 1, and dec, which decrements its argument by 1.
 ```scheme
 (define (+ a b)

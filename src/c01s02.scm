@@ -50,14 +50,14 @@
        angle
        (p (sine (/ angle 3.0)))))
 
-; Exercise 1.16 - iterative exponentiation
+; Exercise 1.17 - iterative multiplication
 ; define the iterative algorithm
-(define (rapid-expt-iter b n product)
-    (cond ((= n 0) product)
-          ; use successive squaring for even powers greater than 2
-          ((and (even? n) (> n 2)) (rapid-expt-iter b (/ n 2) (* product (* b b))))
+(define (rapid-mult-iter a b product)
+    (cond ((= b 0) product)
+          ; if b can be halved and is greater than 2, halve it and double the product of the multiplication
+          ((and (even? b) (> b 2)) (+ product (double (rapid-mult-iter a (halve b) 0))))
           ; else use simple iteration
-          (else (rapid-expt-iter b (- n 1) (* product b)))))
+          (else (rapid-mult-iter a (- b 1) (+ product a)))))
 ; call iterative algorithm in a shorter-form function which initializes a to be 1
-(define (rapid-expt b n)
-    (rapid-expt-iter b n 1))
+(define (rapid-mult a b)
+    (rapid-mult-iter a b 0))

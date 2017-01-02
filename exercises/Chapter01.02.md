@@ -216,3 +216,31 @@ b. What is the order of growth in space and number of steps (as a function of a)
 (rapid-expt 3 5)
 ; Value: 243
 ```
+
+**Exercise 1.17** The exponentiation algorithms in this section are based on performing exponentiation by means of repeated multiplication. In a similar way, one can perform integer multiplication by means of repeated addition. The following multiplication procedure (in which it is assumed that our language can only add, not multiply) is analogous to the expt procedure:
+
+```scheme
+(define (* a b)
+  (if (= b 0)
+      0
+      (+ a (* a (- b 1)))))
+```
+
+This algorithm takes a number of steps that is linear in b. Now suppose we include, together with addition, operations double, which doubles an integer, and halve, which divides an (even) integer by 2. Using these, design a multiplication procedure analogous to fast-expt that uses a logarithmic number of steps.
+
+```scheme
+; define double
+(define (double x) (* x 2))
+; define halve
+(define (halve x) (/ x 2))
+; define the iterative algorithm
+(define (rapid-mult-iter a b product)
+    (cond ((= b 0) product)
+          ; if b can be halved and is greater than 2, halve it and double the product of the multiplication
+          ((and (even? b) (> b 2)) (+ product (double (rapid-mult-iter a (halve b) 0))))
+          ; else use simple iteration
+          (else (rapid-mult-iter a (- b 1) (+ product a)))))
+; call iterative algorithm in a shorter-form function which initializes a to be 1
+(define (rapid-mult a b)
+    (rapid-mult-iter a b 0))
+```

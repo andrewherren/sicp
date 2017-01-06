@@ -51,10 +51,15 @@
        (p (sine (/ angle 3.0)))))
 
 ; Exercise 1.17 - iterative multiplication
+; define double
+(define (double x) (* x 2))
+; define halve
+(define (halve x) (/ x 2))
 ; define the iterative algorithm
 (define (rapid-mult-iter a b product)
     (cond ((= b 0) product)
-          ; if b can be halved and is greater than 2, halve it and double the product of the multiplication
+          ; if b can be halved and is greater than 2, halve it 
+	  ; and double the product of the multiplication
           ((and (even? b) (> b 2)) (+ product (double (rapid-mult-iter a (halve b) 0))))
           ; else use simple iteration
           (else (rapid-mult-iter a (- b 1) (+ product a)))))
